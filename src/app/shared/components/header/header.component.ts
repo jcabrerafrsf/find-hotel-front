@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { selectData } from 'src/app/pages/login/store/auth.selectors';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,18 +15,21 @@ export class HeaderComponent implements OnInit {
   userAccount: any;
 
   constructor(
-    private store: Store
+    private store: Store,
+    private authService: AuthService
   ) {
     this.store
     .pipe(select(selectData))
-    .pipe(takeUntil(this.unsubscribe$))
     .subscribe((state: any) => {
-      this.userAccount = state;
-      debugger
+      this.userAccount = state;      
     });
    }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

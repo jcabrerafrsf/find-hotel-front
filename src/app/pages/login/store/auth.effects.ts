@@ -27,6 +27,7 @@ export class AuthEffects {
           'remember_me',
           JSON.stringify(action.payload.remember)
         );
+        this.router.navigate(['/hotels']);
       })
     ),
     { dispatch: false }
@@ -35,7 +36,11 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType<Login>(AuthActionTypes.CLEAR_DATA),
-      tap((action) => sessionStorage.removeItem('remember_me'))
-    )
+      tap((action) => {
+        sessionStorage.removeItem('remember_me');
+        this.router.navigate(['/login']);
+      })
+    ),
+    { dispatch: false }
   );
 }

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
 import { select, Store } from '@ngrx/store';
 import {
+  ClearData,
   Login,
   LoginError,
   LoginSuccess,
@@ -29,6 +30,10 @@ export class AuthService {
         });
         return data;
       });
+  }
+
+  public logout() {
+    this.store.dispatch(new ClearData());
   }
 
 }

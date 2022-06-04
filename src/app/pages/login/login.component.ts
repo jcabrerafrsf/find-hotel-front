@@ -5,8 +5,9 @@ import { Airline } from 'src/app/interfaces/airline';
 import { AuthService } from 'src/app/services/auth.service';
 import { select, Store } from '@ngrx/store';
 import { selectData } from './store/auth.selectors';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
+import { IAuth } from './store/auth.reducer';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,9 @@ export class LoginComponent implements OnInit {
   checkForm = false;
 
   private unsubscribe$ = new Subject<void>();
+  auth$: Observable<IAuth> | undefined;
+
+  public currentSession?: IAuth;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,21 +31,18 @@ export class LoginComponent implements OnInit {
     private store: Store,
     private router: Router,
   ) {
-    let userAccount;
-    this.store.subscribe();
-    this.store
-    .pipe(select(selectData))
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((state: any) => {
-      userAccount = state;
-      if (userAccount) {
-        this.router.navigate(['/hotels']);
-      }
-    });
-
   }
 
   ngOnInit(): void {
+    this.auth$ = this.store.select(selectData);
+    this.auth$
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((state: IAuth) => {
+      if (state) {
+        // this.router.navigate(['/hotels']);
+      }
+    });
+
     this.loginForm = this.formBuilder.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
