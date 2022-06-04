@@ -11,14 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'hotels',
-    canActivate:[AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/hotels/hotels.module').then((m) => m.HotelsModule),
-  }
+  },
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

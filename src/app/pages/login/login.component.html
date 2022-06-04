@@ -11,12 +11,20 @@
             <h1 class="card-title text-center mb-4 fs-5">
               Login to find the best hotel
             </h1>
+
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <div class="form-floating mb-3">
-                <select class="form-select" formControlName="airline">
-                  <option value="1">Airline One</option>
-                  <option value="2">Airline Two</option>
-                  <option value="3">Airline Three</option>
+                <select
+                  class="form-select"
+                  formControlName="airline"
+                >
+                  <option [ngValue]="null" disabled>Choose your airline</option>
+                  <option
+                    *ngFor="let airline of airlineList"
+                    [ngValue]="airline.name"
+                  >
+                    {{ airline.name | titlecase }}
+                  </option>
                 </select>
                 <small
                   *ngIf="
@@ -50,7 +58,7 @@
 
               <div class="form-floating mb-3">
                 <input
-                  type="password"
+                  type="number"
                   class="form-control"
                   id="floatingPassword"
                   placeholder="Password"
@@ -73,7 +81,7 @@
                   type="checkbox"
                   value=""
                   id="rememberPasswordCheck"
-                  formControlName="remember"
+                  formControlName="remember_me"
                 />
                 <label class="form-check-label" for="rememberPasswordCheck">
                   Remember password
@@ -84,8 +92,13 @@
                   class="btn btn-primary btn-login text-uppercase fw-bold"
                   type="submit"
                 >
-                  Sign in
+                  Sign In
                 </button>
+                <small
+                class="text-red mt-2"
+                *ngIf="this.loginForm.invalid && checkForm"
+                >Please, complete all fields.</small
+              >
               </div>
             </form>
           </div>

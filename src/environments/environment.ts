@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  airlineUrl: 'https://beta.id90travel.com/airlines',
+  authUrl: 'https://beta.id90travel.com/session.json'
 };
 
 /*
