@@ -67,11 +67,13 @@ export class HotelsComponent implements OnInit {
     .pipe((data) => {
       data.subscribe({
         next: ({ hotels, meta }) => {
+          debugger
           this.hotelList = hotels;
           this.total_page = Math.ceil(meta.summary.all_results.total_result_count / 10);
           this.loading = false;
         },
         error: (e) => {
+          debugger
           console.error("Error get hotels: " + e)
           this.loading = false;
           this.error = true;

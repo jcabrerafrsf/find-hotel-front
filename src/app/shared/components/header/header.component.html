@@ -10,10 +10,12 @@
       />
     </div>
   </a>
-  <div>Hi! {{ userAccount.member.first_name }}</div>
-  <div class="button">
-    <button class="btn btn-outline-info my-2 my-sm-0" (click)="logout()">
-      Log out
-    </button>
+  <div class="toRight">
+    <div class="margin-right">Hi! {{ userAccount.member.first_name }} {{ userAccount.member.last_name }}</div>
+    <div class="button">
+      <button class="btn btn-outline-info my-2 my-sm-0" (click)="logout()">
+        Log out
+      </button>
+    </div>
   </div>
 </nav>

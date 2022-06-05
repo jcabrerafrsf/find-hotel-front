@@ -21,7 +21,9 @@ export class HeaderComponent implements OnInit {
     this.store
     .pipe(select(selectData))
     .subscribe((state: any) => {
-      this.userAccount = state;      
+      if(state) {
+        this.userAccount = state;  
+      }
     });
    }
 

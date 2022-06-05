@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   airlineList: Airline[] = [];
   checkForm = false;
+  errorLogin = false;
 
   private unsubscribe$ = new Subject<void>();
   auth$: Observable<IAuth> | undefined;
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((state: IAuth) => {
       if (state) {
-        // this.router.navigate(['/hotels']);
+        this.router.navigate(['/hotels']);
       }
     });
 
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.loginForm.valid
-      ? this.authService.login(this.loginForm.value).subscribe()
+      ? this.authService.login(this.loginForm.value)
       : (this.checkForm = true);
   }
 }

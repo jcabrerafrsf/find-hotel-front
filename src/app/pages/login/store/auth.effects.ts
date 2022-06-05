@@ -23,7 +23,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType<Login>(AuthActionTypes.LOGIN_SUCCESS),
       tap((action) => {
-        sessionStorage.setItem(
+        localStorage.setItem(
           'remember_me',
           JSON.stringify(action.payload.remember)
         );
@@ -43,4 +43,15 @@ export class AuthEffects {
     ),
     { dispatch: false }
   );
+
+  error_login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<Login>(AuthActionTypes.LOGIN_ERROR),
+      tap((action) => {
+        alert("Invalid Username or Password");
+      })
+    ),
+    { dispatch: false }
+  );
+
 }

@@ -11,11 +11,12 @@ const routes: Routes = [
   },
   {
     path: 'hotels',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/hotels/hotels.module').then((m) => m.HotelsModule),
   },
   // otherwise redirect to home
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

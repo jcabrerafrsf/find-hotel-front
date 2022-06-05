@@ -13,21 +13,15 @@ import { selectData } from 'src/app/pages/login/store/auth.selectors';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  active: boolean = false;
 
-  constructor(private store: Store) {}
+  constructor() {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    this.store.pipe(select(selectData)).subscribe((state: any) => {
-      this.active = !!state;
-    });
-    return this.active;
+    const storage = JSON.parse(localStorage.getItem('auth') || '{}');
+    return storage.data && !storage.error;
   }
 }
