@@ -1,29 +1,139 @@
 <app-header></app-header>
 
 <div class="container">
-    <div class='col-md-5'>
-       <div class="form-group">
-          <div class='input-group date' id='datetimepicker6'>
-             <input type='text' class="form-control" />
-             <span class="input-group-addon">
-             <span class="glyphicon glyphicon-calendar"></span>
-             </span>
-          </div>
-       </div>
-    </div>
-    <div class='col-md-5'>
-       <div class="form-group">
-          <div class='input-group date' id='datetimepicker7'>
-             <input type='text' class="form-control" />
-             <span class="input-group-addon">
-             <span class="glyphicon glyphicon-calendar"></span>
-             </span>
-          </div>
-       </div>
-    </div>
- </div>
+  <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <div class="row firstRow">
 
-<table class="table">
+        <div class="alert alert-danger mt-4 mb-3" role="alert" *ngIf="checkForm">
+          It is necessary to complete all the fields to start the search
+        </div>
+
+        <!-- Destination -->
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="row">Destination</div>
+          <div class="row">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Destination"
+                formControlName="destination"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <small
+            *ngIf="
+            hotelForm.get('destination')?.invalid &&
+            hotelForm.controls['destination'].touched
+            "
+            class="text-red"
+            >It's required</small>
+          </div>
+        </div>
+
+        <!-- Date - Check in -->
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="row">Check in</div>
+          <div class="row">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dpInit"
+                [(ngModel)]="modelInit"
+                ngbDatepicker
+                #i="ngbDatepicker"
+                (click)="i.toggle()"
+                formControlName="checkin"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <small
+            *ngIf="
+            hotelForm.get('checkin')?.invalid &&
+            hotelForm.controls['checkin'].touched
+            "
+            class="text-red"
+            >It's required</small>
+          </div>
+        </div>
+
+        <!-- Date - Check out -->
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="row">Check out</div>
+          <div class="row">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dpLast"
+                [(ngModel)]="modelLast"
+                ngbDatepicker
+                #l="ngbDatepicker"
+                (click)="l.toggle()"
+                formControlName="checkout"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <small
+            *ngIf="
+            hotelForm.get('checkout')?.invalid &&
+            hotelForm.controls['checkout'].touched
+            "
+            class="text-red"
+            >It's required</small>
+          </div>
+        </div>
+
+        <!-- Guests -->
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="row">Guests</div>
+          <div class="row">
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Guests"
+                formControlName="guests"
+                min="1" max="4"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <small
+            *ngIf="
+            hotelForm.get('guests')?.invalid &&
+            hotelForm.controls['guests'].touched
+            "
+            class="text-red"
+            >It's required</small>
+          </div>
+        </div>
+
+        <!-- Button search -->
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="row">Search</div>
+          <div class="row">
+            <div class="input-group">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                type="submit"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -53,5 +163,6 @@
       </tr>
     </tbody>
   </table>
+</div>
 
 <app-footer></app-footer>

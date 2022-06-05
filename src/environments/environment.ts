@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   airlineUrl: 'https://beta.id90travel.com/airlines',
-  authUrl: 'https://beta.id90travel.com/session.json'
+  authUrl: 'https://beta.id90travel.com/session.json',
+  hotelsUrl: 'https://beta.id90travel.com/api/v1/hotels.json'
 };
 
 /*

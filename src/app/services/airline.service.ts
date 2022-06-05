@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class AirlineService {
 
   constructor(
-    private http: HttpClient
+    private httpClient: HttpClient
   ) { }
 
   getAirlines() {
-    return this.http.get<Airline[]>(environment.airlineUrl);
+    return this.httpClient.get<Airline[]>(environment.airlineUrl);
   }
 
 }

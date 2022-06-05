@@ -5,6 +5,9 @@ import { HotelsRoutingModule } from './hotels-routing.module';
 import { HotelsComponent } from './hotels.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     HotelsRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class HotelsModule { }
