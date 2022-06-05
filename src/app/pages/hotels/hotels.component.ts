@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { selectData } from '../login/store/auth.selectors';
 import { HotelService } from 'src/app/services/hotel.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-hotels',
@@ -20,6 +21,13 @@ export class HotelsComponent implements OnInit {
   hotelForm!: FormGroup;
 
   checkForm = false;
+
+  hotelList: any;
+  total_page: any;
+ 
+  currentPage: number = 1;
+  loading: boolean = false;
+  error: boolean = false;
 
   constructor(
     private store: Store,
@@ -44,30 +52,59 @@ export class HotelsComponent implements OnInit {
   }
 
   onSubmit() {
+    this.currentPage = 1;
     this.hotelForm.valid
-      ? this.hotelServices.getHotels(this.formatData(this.hotelForm.value)).subscribe()
+      ? this.retrieveHotels()
       : (this.checkForm = true);
   }
 
+  retrieveHotels() {
+    this.loading = true;
+    this.checkForm = false;
+    this.error = false;
+    this.hotelServices
+    .getHotels(this.formatData(this.hotelForm.value))
+    .pipe((data) => {
+      data.subscribe({
+        next: ({ hotels, meta }) => {
+          this.hotelList = hotels;
+          this.total_page = Math.ceil(meta.summary.all_results.total_result_count / 10);
+          this.loading = false;
+        },
+        error: (e) => {
+          console.error("Error get hotels: " + e)
+          this.loading = false;
+          this.error = true;
+        },
+      });
+      return data;
+    });
+  }
+
   formatData(data: any) {
-    return data = {
-      currency: "USD",
+    return (data = {
+      currency: 'USD',
       rooms: 1,
-      sort_criteria: "Overall",
-      sort_order: "desc",
-      checkin: `${data.checkin.year}-${data.checkin.month}-${data.checkin.day}`,
-      checkout: `${data.checkout.year}-${data.checkout.month}-${data.checkout.day}`,
+      sort_criteria: 'Overall',
+      sort_order: 'desc',
+      checkin: this.formatDate(data.checkin),
+      checkout: this.formatDate(data.checkout),
       'guests[]': data.guests,
       destination: data.destination,
-      page: 1,
+      page: this.currentPage,
       per_page: 10,
-    };
+    });
   }
 
   formatDate(data: any) {
-    data.day = 12
-    data.month = 6
-    data.year = 2022
+    return moment(`${data.year}-${data.month}-${data.day}`).format(
+      'YYYY-MM-DD'
+    );
+  }
+
+  changePage(data: any) {
+    this.currentPage = data;
+    this.retrieveHotels();
   }
 
 }

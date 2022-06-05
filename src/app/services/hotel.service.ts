@@ -12,8 +12,6 @@ export class HotelService {
   ) { }
 
   getHotels(data: any) {
-    let queryParams = new HttpParams();
-    debugger
     return this.httpClient.get<any>(environment.hotelsUrl, {params: data});
   }
 

@@ -13,3 +13,23 @@
 .text-red {
     color: red;
 }
+
+.spinner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.box {
+    margin-top: 2em;
+}
+
+.tableHotel {
+    margin-top: 3em;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}

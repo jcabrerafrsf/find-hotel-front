@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Star</th>
+      <th scope="col">Review</th>
+      <th scope="col">Nights</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hotel of hotelList">
+      <td>{{ hotel.name }}</td>
+      <td>{{ hotel.location_description }}</td>
+      <td>{{ hotel.star_rating }}</td>
+      <td>{{ hotel.review_rating }}</td>
+      <td>{{ hotel.nights }}</td>
+      <td>{{ hotel.total }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination-container">
+    <i class="bi-arrow-left-circle" style="font-size: 2rem; color: cornflowerblue;" (click)="previousPage()"></i>
+    {{ pageNumber }} de {{ total_page }}
+    <i class="bi-arrow-right-circle" style="font-size: 2rem; color: cornflowerblue;" (click)="nextPage()"></i>
+</div>
+
