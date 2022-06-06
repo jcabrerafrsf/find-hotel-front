@@ -1,13 +1,11 @@
 <app-header></app-header>
 
 <div class="container">
-
   <div class="title">
     <h1>Find the best hotel</h1>
   </div>
 
   <div class="box">
-
     <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <div class="row firstRow">
@@ -18,9 +16,9 @@
           >
             It is necessary to complete all the fields to start the search
           </div>
-  
+
           <!-- Destination -->
-          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 center">
             <div class="row">Destination</div>
             <div class="row">
               <div class="input-group">
@@ -43,9 +41,9 @@
               >
             </div>
           </div>
-  
+
           <!-- Date - Check in -->
-          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 center">
             <div class="row">Check in</div>
             <div class="row">
               <div class="input-group">
@@ -72,9 +70,9 @@
               >
             </div>
           </div>
-  
+
           <!-- Date - Check out -->
-          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 center">
             <div class="row">Check out</div>
             <div class="row">
               <div class="input-group">
@@ -101,9 +99,9 @@
               >
             </div>
           </div>
-  
+
           <!-- Guests -->
-          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2 center">
             <div class="row">Guests</div>
             <div class="row">
               <div class="input-group">
@@ -128,9 +126,9 @@
               >
             </div>
           </div>
-  
+
           <!-- Button search -->
-          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 center">
+          <div class="col-sm-12 col-md-12 col-lg-1 col-xl-1 center">
             <div class="row">Search</div>
             <div class="row">
               <button
@@ -159,9 +157,7 @@
         </div>
       </div>
     </form>
-
   </div>
-  
 
   <div class="spinner mt-5" *ngIf="loading">
     <div
@@ -171,17 +167,23 @@
     ></div>
   </div>
 
-  <div class="alert alert-warning mt-4 mb-3" role="alert" *ngIf="error">
-    We did not find hotels with the indicated parameters :(
-  </div>
-
-  <div class="tableHotel">
-    <app-table-hotel
+  <app-group-card-hotel
     [hotelList]="hotelList"
     [total_page]="total_page"
     *ngIf="hotelList"
     (pagEmitter)="changePage($event)"
-  ></app-table-hotel>
+  ></app-group-card-hotel>
+
+  <div class="alert alert-warning mt-4 mb-3" role="alert" *ngIf="error">
+    We did not find hotels with the indicated parameters :(
   </div>
 
+  <!-- <div class="tableHotel">
+    <app-table-hotel
+      [hotelList]="hotelList"
+      [total_page]="total_page"
+      *ngIf="hotelList"
+      (pagEmitter)="changePage($event)"
+    ></app-table-hotel>
+  </div> -->
 </div>

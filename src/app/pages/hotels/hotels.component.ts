@@ -63,7 +63,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
       .pipe((data) => {
         data.subscribe({
           next: ({ hotels, meta }) => {
-            this.hotelList = hotels;
+            this.hotelList = hotels;            
             this.total_page = Math.ceil(
               meta.summary.all_results.total_result_count / 10
             );
