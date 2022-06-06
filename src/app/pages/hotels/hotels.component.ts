@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { selectData } from '../login/store/auth.selectors';
 import { HotelService } from 'src/app/services/hotel.service';
 import * as moment from 'moment';
@@ -11,20 +11,15 @@ import * as moment from 'moment';
   templateUrl: './hotels.component.html',
   styleUrls: ['./hotels.component.scss'],
 })
-export class HotelsComponent implements OnInit {
+export class HotelsComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   userAccount: any;
-
   modelInit: any;
   modelLast: any;
-
   hotelForm!: FormGroup;
-
   checkForm = false;
-
   hotelList: any;
   total_page: any;
- 
   currentPage: number = 1;
   loading: boolean = false;
   error: boolean = false;
@@ -53,34 +48,35 @@ export class HotelsComponent implements OnInit {
 
   onSubmit() {
     this.currentPage = 1;
-    this.hotelForm.valid
-      ? this.retrieveHotels()
-      : (this.checkForm = true);
+    this.hotelForm.valid ? this.retrieveHotels() : (this.checkForm = true);
   }
+
+  // With "take" It makes sure that you’re getting the data only once.
 
   retrieveHotels() {
     this.loading = true;
     this.checkForm = false;
     this.error = false;
     this.hotelServices
-    .getHotels(this.formatData(this.hotelForm.value))
-    .pipe((data) => {
-      data.subscribe({
-        next: ({ hotels, meta }) => {
-          debugger
-          this.hotelList = hotels;
-          this.total_page = Math.ceil(meta.summary.all_results.total_result_count / 10);
-          this.loading = false;
-        },
-        error: (e) => {
-          debugger
-          console.error("Error get hotels: " + e)
-          this.loading = false;
-          this.error = true;
-        },
+      .getHotels(this.formatData(this.hotelForm.value))
+      .pipe(take(1))
+      .pipe((data) => {
+        data.subscribe({
+          next: ({ hotels, meta }) => {
+            this.hotelList = hotels;
+            this.total_page = Math.ceil(
+              meta.summary.all_results.total_result_count / 10
+            );
+            this.loading = false;
+          },
+          error: (e) => {
+            console.error('Error get hotels: ' + e);
+            this.loading = false;
+            this.error = true;
+          },
+        });
+        return data;
       });
-      return data;
-    });
   }
 
   formatData(data: any) {
@@ -109,4 +105,8 @@ export class HotelsComponent implements OnInit {
     this.retrieveHotels();
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.unsubscribe();
+  }
 }
