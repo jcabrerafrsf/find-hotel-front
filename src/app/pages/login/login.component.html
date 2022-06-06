@@ -4,100 +4,73 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
+
+            <!-- Logo -->
             <div class="logo-image mb-4">
               <img src="/assets/images/logo.png" width="180" height="70" />
             </div>
 
+            <!-- Title -->
             <h1 class="card-title text-center mb-4 fs-5">
               Login to find the best hotel
             </h1>
 
+            <!-- Form -->
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              <!-- Select airline -->
               <div class="form-floating mb-3">
-                <select
-                  class="form-select"
-                  formControlName="airline"
-                >
+                <select class="form-select" formControlName="airline">
                   <option [ngValue]="null" disabled>Choose your airline</option>
-                  <option
-                    *ngFor="let airline of airlineList"
-                    [ngValue]="airline.name"
-                  >
+                  <option *ngFor="let airline of airlineList" [ngValue]="airline.name">
                     {{ airline.name | titlecase }}
                   </option>
                 </select>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     loginForm.get('airline')?.invalid &&
                     loginForm.controls['airline'].touched
-                  "
-                  class="text-red"
-                  >It's required</small
-                >
+                  " class="text-red">It's required</small>
                 <label for="floatingInput">Airlines</label>
               </div>
 
+              <!-- Username -->
               <div class="form-floating mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder="Username"
-                  formControlName="username"
-                />
-                <small
-                  *ngIf="
+                <input type="text" class="form-control" id="floatingInput" placeholder="Username"
+                  formControlName="username" />
+                <small *ngIf="
                     loginForm.get('username')?.invalid &&
                     loginForm.controls['username'].touched
-                  "
-                  class="text-red"
-                  >It's required</small
-                >
+                  " class="text-red">It's required</small>
                 <label for="floatingInput">Username</label>
               </div>
 
+              <!-- Password -->
               <div class="form-floating mb-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="floatingPassword"
-                  placeholder="Password"
-                  formControlName="password"
-                />
-                <small
-                  *ngIf="
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                  formControlName="password" />
+                <small *ngIf="
                     loginForm.get('password')?.invalid &&
                     loginForm.controls['password'].touched
-                  "
-                  class="text-red"
-                  >It's required</small
-                >
+                  " class="text-red">It's required</small>
                 <label for="floatingPassword">Password</label>
               </div>
 
+              <!-- Remember -->
               <div class="form-check mb-3">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="rememberPasswordCheck"
-                  formControlName="remember_me"
-                />
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck"
+                  formControlName="remember_me" />
                 <label class="form-check-label" for="rememberPasswordCheck">
-                  Remember password
+                  Remember me
                 </label>
               </div>
+
+              <!-- Button sign in -->
               <div class="d-grid">
-                <button
-                  class="btn btn-primary btn-login text-uppercase fw-bold"
-                  type="submit"
-                >
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">
                   Sign In
                 </button>
-                <small
-                class="text-red mt-2"
-                *ngIf="this.loginForm.invalid && checkForm"
-                >Please, complete all fields.</small>
+                <small class="text-red mt-2" *ngIf="this.loginForm.invalid && checkForm">Please, complete all
+                  fields.</small>
               </div>
             </form>
           </div>

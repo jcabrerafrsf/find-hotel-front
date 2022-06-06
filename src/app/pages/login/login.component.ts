@@ -25,6 +25,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public currentSession?: IAuth;
 
+  /**
+  * Create an instance of login component.
+  * @param 
+  * @returns login component instance
+  */
   constructor(
     private formBuilder: FormBuilder,
     private airlineService: AirlineService,

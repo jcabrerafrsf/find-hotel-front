@@ -16,6 +16,11 @@ import {
 export class AuthService {
   constructor(private httpClient: HttpClient, private store: Store) {}
 
+  /**
+  * Login by user. Executes LoginSuccess or LoginError action of auth store.
+  * @param User
+  * @returns Observable <any>
+  */
   public login(user: User) {
     this.store.dispatch(new Login());
     return this.httpClient
@@ -32,6 +37,11 @@ export class AuthService {
       });
   }
 
+  /**
+  * Logout by user. Executes ClearData action of auth store for clear store.
+  * @param empty
+  * @returns empty
+  */
   public logout() {
     this.store.dispatch(new ClearData());
   }

@@ -13,6 +13,11 @@ export class AirlineService {
     private httpClient: HttpClient
   ) { }
 
+  /**
+  * Retrieve airlines.
+  * @param 
+  * @returns Observable
+*/
   getAirlines() {
     return this.httpClient.get<Airline[]>(environment.airlineUrl);
   }

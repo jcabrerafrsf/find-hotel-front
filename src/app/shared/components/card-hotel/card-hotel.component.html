@@ -1,32 +1,36 @@
 <div class="card" style="width: 18rem">
-  <img
-    class="card-img-top"
-    [src]="hotel.image"
-    alt="Card image cap"
-  />
+
+  <!-- Image -->
+  <img class="card-img-top" [src]="hotel.image" alt="Card image cap" />
+
   <div class="card-body">
+
+    <!-- Name -->
     <h5 class="card-title">{{ hotel.name }}</h5>
     <div class="row">
+
+      <!-- Description -->
       <div class="col">
         <p class="card-text" style="height: 48px;">
           {{ hotel.location_description }}
         </p>
       </div>
+
     </div>
-      <div class="row" style="
-      margin-bottom: 16px;
-      margin-top: 16px;">
-        <div class="col">
-          <div class="row"><strong>Star: {{ hotel.star_rating }}</strong></div>
-          <div class="row"><b>Review:  {{ hotel.review_rating }}</b></div>
-        </div>
-        <div class="col">
-          <div class="row"><b>Nights: {{ hotel.nights }}</b></div>
-          <div class="row"><b>Total: {{ hotel.total | number: '1.0-0'}}</b></div>
-        </div>
+
+    <!-- Features -->
+    <div class="row card-features">
+      <div class="col">
+        <div class="row"><strong>Star: {{ hotel.star_rating }}</strong></div>
+        <div class="row"><b>Review: {{ hotel.review_rating }}</b></div>
       </div>
+      <div class="col">
+        <div class="row"><b>Nights: {{ hotel.nights }}</b></div>
+        <div class="row"><b>Total: {{ hotel.total | number: '1.0-0'}}</b></div>
+      </div>
+    </div>
 
-
+    <!-- Button detail -->
     <a class="btn btn-primary" (click)="seeDetail(hotel.id)">See detail</a>
   </div>
 </div>

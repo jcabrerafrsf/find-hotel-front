@@ -5,6 +5,7 @@ import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { selectData } from '../login/store/auth.selectors';
 import { HotelService } from 'src/app/services/hotel.service';
 import * as moment from 'moment';
+import { HotelSearch } from 'src/app/interfaces/hotelsearch';
 
 @Component({
   selector: 'app-hotels',
@@ -79,7 +80,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
       });
   }
 
-  formatData(data: any) {
+  formatData(data: any): HotelSearch {
     return (data = {
       currency: 'USD',
       rooms: 1,

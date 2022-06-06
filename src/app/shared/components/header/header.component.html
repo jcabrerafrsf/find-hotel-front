@@ -1,21 +1,23 @@
 <nav class="navbar navbar-light bg-light justify-content-between">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand">
+
+    <!-- Logo -->
     <div class="image">
-      <img
-        src="/assets/images/logo.png"
-        width="150"
-        height="50"
-        class="d-inline-block align-top"
-        alt=""
-      />
+      <img src="/assets/images/logo.png" width="150" height="50" class="d-inline-block align-top" alt="" />
     </div>
+
   </a>
   <div class="toRight">
+
+    <!-- User information -->
     <div class="margin-right">Hi! {{ userAccount.member.first_name }} {{ userAccount.member.last_name }}</div>
+
+    <!-- Button log out -->
     <div class="button">
       <button class="btn btn-outline-info my-2 my-sm-0" (click)="logout()">
         Log out
       </button>
     </div>
+
   </div>
 </nav>
