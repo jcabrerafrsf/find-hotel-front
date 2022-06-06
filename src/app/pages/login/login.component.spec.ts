@@ -2,15 +2,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from './login.component';
-import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { of } from 'rxjs';
+import {
+  Login,
+  AuthActionTypes
+} from 'src/app/pages/login/store/auth.actions';
+import * as fromAuthReducer from 'src/app/pages/login/store/auth.reducer';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let guard: AuthGuard;
+
+  const storeMock = {
+    select() {
+      return of({ name: 'Peter', registrationDate: '11/11/18' });
+    },
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,20 +33,19 @@ describe('LoginComponent', () => {
         StoreModule.forRoot({}),
         RouterTestingModule,
       ],
-      providers: [AuthGuard],
+      providers: [{ provide: Store, useValue: storeMock }],
     }).compileComponents();
+
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    guard = new AuthGuard();
     fixture.detectChanges();
   });
 
-  it('not be able to hit route when user is not logged in', () => {
-    let algo = localStorage.setItem('auth', '{"data":null}');
-    expect(guard.canActivate()).toBe(false);
+  afterEach(() => {
+    fromAuthReducer.initialState.data = null;
   });
 
   it('should create login component', () => {
@@ -64,4 +73,29 @@ describe('LoginComponent', () => {
     remember_me.setValue('true');
     expect(component.loginForm.valid).toBeTruthy();
   });
+
+  it('should return an error message when a field is not complete', () => {
+    const username = component.loginForm.controls['username'];
+    username.setValue('jcabrera');
+    const button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+    fixture.detectChanges();
+    const usernameErrorMsg =
+      fixture.debugElement.nativeElement.querySelector('small');
+    expect(usernameErrorMsg).toBeDefined();
+    expect(usernameErrorMsg.innerHTML).toContain('complete all fields');
+  });
+
+  it('should create a Login action', () => {
+    const action = new Login();
+    expect(action.type).toEqual(AuthActionTypes.LOGIN);
+  });
+
+  it('should return the pending state when login started', () => {
+    const { initialState } = fromAuthReducer;
+    initialState.pending = true;
+    const state = fromAuthReducer.reducer(undefined, new Login());
+    expect(state).toEqual(initialState);
+  });
+
 });

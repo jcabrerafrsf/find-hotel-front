@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   ClearData,
   Login,
@@ -35,5 +35,4 @@ export class AuthService {
   public logout() {
     this.store.dispatch(new ClearData());
   }
-
 }

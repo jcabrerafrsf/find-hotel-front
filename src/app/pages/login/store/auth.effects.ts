@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import {
   AuthActionTypes,
-  Login,
-  LoginError,
-  LoginSuccess,
+  Login
 } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
-    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -37,7 +33,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType<Login>(AuthActionTypes.CLEAR_DATA),
       tap((action) => {
-        sessionStorage.removeItem('remember_me');
+        localStorage.removeItem('remember_me');
         this.router.navigate(['/login']);
       })
     ),
